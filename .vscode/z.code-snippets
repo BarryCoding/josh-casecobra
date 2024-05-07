@@ -1,4 +1,14 @@
 {
+  "Pure Component": {
+    "scope": "typescriptreact",
+    "prefix": "tsx-pure",
+    "body": [
+      "export const $TM_FILENAME_BASE = () => {",
+      "  return <div>$TM_FILENAME_BASE</div>",
+      "}",
+    ],
+    "description": "Typescript React Function Component",
+  },
   "Wrapper Component": {
     "scope": "typescriptreact",
     "prefix": "tsx-wrap",
