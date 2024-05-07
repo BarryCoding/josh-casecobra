@@ -1,0 +1,43 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always",
+    "source.addMissingImports": "always"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "explorer.confirmDelete": false,
+  "explorer.sortOrder": "filesFirst",
+  "explorer.compactFolders": false,
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "next.config.mjs": "components.json, .gitignore, postcss.config.mjs, .prettierrc.json, tailwind.config.ts, tsconfig.json, .eslintrc.json, next-env.d.ts"
+  },
+
+  "workbench.iconTheme": "vscode-icons",
+  "workbench.sideBar.location": "right",
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#53a858",
+    "activityBar.background": "#53a858",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#d6d4ea",
+    "activityBarBadge.foreground": "#15202b",
+    "commandCenter.border": "#e7e7e799",
+    "sash.hoverBorder": "#53a858",
+    "statusBar.background": "#428646",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#53a858",
+    "statusBarItem.remoteBackground": "#428646",
+    "statusBarItem.remoteForeground": "#e7e7e7",
+    "titleBar.activeBackground": "#428646",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#42864699",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "peacock.color": "#428646"
+}
