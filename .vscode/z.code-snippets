@@ -1,7 +1,7 @@
 {
-  "Component with className and children": {
+  "Wrapper Component": {
     "scope": "typescriptreact",
-    "prefix": "tsx-slot",
+    "prefix": "tsx-wrap",
     "body": [
       "import { cn } from '@/lib/utils'",
       "",
@@ -15,5 +15,25 @@
       "}",
     ],
     "description": "Typescript React Function Component with className and children",
+  },
+  "Div Component": {
+    "scope": "typescriptreact",
+    "prefix": "tsx-div",
+    "body": [
+      "import { cn } from '@/lib/utils'",
+      "import { HTMLAttributes } from 'react'",
+      "",
+      "interface ${TM_FILENAME_BASE}Props extends HTMLAttributes<HTMLDivElement> {}",
+      "",
+      "export const $TM_FILENAME_BASE = ({ className, ...props }: ${TM_FILENAME_BASE}Props) => {",
+      "  return <div className={cn('${1:flex}', className)} {...props}>$TM_FILENAME_BASE</div>",
+      "}",
+    ],
+    "description": "Typescript React Function Div Component",
+  },
+  "div with classname": {
+    "scope": "typescriptreact",
+    "prefix": "divc",
+    "body": ["<div className='$1'>$0</div>"],
   },
 }
