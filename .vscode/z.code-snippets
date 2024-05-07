@@ -1,12 +1,19 @@
 {
-  // Project Snippets
-  // "Print to console": {
-  // 	"scope": "javascript,typescript",
-  // 	"prefix": "log",
-  // 	"body": [
-  // 		"console.log('$1');",
-  // 		"$2"
-  // 	],
-  // 	"description": "Log output to console"
-  // }
+  "Component with className and children": {
+    "scope": "typescriptreact",
+    "prefix": "tsx-slot",
+    "body": [
+      "import { cn } from '@/lib/utils'",
+      "",
+      "interface ${TM_FILENAME_BASE}Props {",
+      "  children: React.ReactNode",
+      "  className?: string",
+      "}",
+      "",
+      "export const $TM_FILENAME_BASE = ({ children, className }: ${TM_FILENAME_BASE}Props) => {",
+      "  return <div className={cn('${1:flex}', className)}>{children}</div>",
+      "}",
+    ],
+    "description": "Typescript React Function Component with className and children",
+  },
 }
