@@ -1,11 +1,14 @@
 import Link from 'next/link'
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
+import { ArrowRightCircleIcon, LayoutDashboardIcon } from 'lucide-react'
 import { CenterWrapper } from './CenterWrapper'
-import { ArrowRight } from 'lucide-react'
 import { buttonVariants } from './ui/button'
 
-export const Navbar = () => {
-  const isLoggedIn = false
-  const isAdmin = false
+export const Navbar = async () => {
+  const { getUser } = getKindeServerSession()
+  const user = await getUser()
+  const isLoggedIn = !!user?.id
+  const isAdmin = user?.email === process.env.ADMIN_EMAIL
 
   return (
     <nav className='sticky inset-x-0 top-0 z-[100] h-14 w-full border-b border-zinc-200 bg-white/75 backdrop-blur-md'>
@@ -23,14 +26,6 @@ export const Navbar = () => {
                 >
                   Sign out
                 </Link>
-                {isAdmin && (
-                  <Link
-                    href='/dashboard'
-                    className={buttonVariants({ size: 'sm', variant: 'ghost' })}
-                  >
-                    Dashboard ✨
-                  </Link>
-                )}
               </>
             ) : (
               <>
@@ -44,20 +39,32 @@ export const Navbar = () => {
                   href='/api/auth/login'
                   className={buttonVariants({ size: 'sm', variant: 'ghost' })}
                 >
-                  Login
+                  Sign in
                 </Link>
               </>
             )}
-            <Link
-              href='/configure/upload'
-              className={buttonVariants({
-                size: 'sm',
-                className: 'hidden items-center gap-2 sm:flex',
-              })}
-            >
-              Create case
-              <ArrowRight className='h-5 w-5' />
-            </Link>
+
+            {isAdmin ? (
+              <Link
+                href='/dashboard'
+                className={buttonVariants({
+                  size: 'sm',
+                  className: 'hidden items-center gap-2 capitalize sm:flex',
+                })}
+              >
+                dashboard <LayoutDashboardIcon className='h-5 w-5' />
+              </Link>
+            ) : (
+              <Link
+                href='/configure/upload'
+                className={buttonVariants({
+                  size: 'sm',
+                  className: 'hidden items-center gap-2 capitalize sm:flex',
+                })}
+              >
+                create now <ArrowRightCircleIcon className='h-5 w-5' />
+              </Link>
+            )}
           </div>
         </div>
       </CenterWrapper>
