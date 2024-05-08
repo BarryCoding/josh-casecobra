@@ -1,6 +1,6 @@
-import Link from 'next/link'
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import { ArrowRightCircleIcon, LayoutDashboardIcon } from 'lucide-react'
+import Link from 'next/link'
 import { CenterWrapper } from './CenterWrapper'
 import { buttonVariants } from './ui/button'
 
