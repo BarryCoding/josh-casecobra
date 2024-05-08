@@ -1,6 +1,7 @@
 import { CenterWrapper } from '@/components/CenterWrapper'
 import { Icons } from '@/components/Icons'
 import { PhoneCase } from '@/components/PhoneCase'
+import { ReviewGrid } from '@/components/reviews/ReviewGrid'
 import { CheckCheckIcon, CheckCircleIcon, StarIcon } from 'lucide-react'
 
 export default function Home() {
@@ -166,7 +167,7 @@ export default function Home() {
               <div className='text-lg leading-8'>
                 <p>
                   &ldquo;I usually keep my phone together with my keys in my pocket and that led to
-                  some pretty heavy scratchmarks on all of my last phone cases. This one, besides a
+                  some pretty heavy scratch marks on all of my last phone cases. This one, besides a
                   barely noticeable scratch on the corner,{' '}
                   <span className='bg-slate-800 p-0.5 text-white'>
                     looks brand new after about half a year
@@ -190,6 +191,20 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </CenterWrapper>
+
+        <CenterWrapper className='relative mt-16 max-w-5xl'>
+          <img
+            aria-hidden='true'
+            src='/what-people-are-buying.png'
+            className='absolute -left-32 top-1/3 hidden select-none xl:block'
+            alt='what people are buying'
+          />
+          {/* blur effect */}
+          <div className='pointer-events-none absolute inset-x-0 top-0 z-10 h-32 bg-gradient-to-b from-slate-100' />
+          <div className='pointer-events-none absolute inset-x-0 bottom-0 z-10 h-32 bg-gradient-to-t from-slate-100' />
+
+          <ReviewGrid />
         </CenterWrapper>
       </section>
     </main>

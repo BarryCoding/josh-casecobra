@@ -12,8 +12,7 @@
     "yoavbls.pretty-ts-errors",
 
     // pretty VSCode
-    // "pkief.material-icon-theme",   // material icon
-    "vscode-icons-team.vscode-icons", // vscode icon
+    "pkief.material-icon-theme", // material icon
     "johnpapa.vscode-peacock",
     "aykutsarac.jsoncrack-vscode",
 

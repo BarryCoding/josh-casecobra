@@ -18,7 +18,7 @@
     "next.config.mjs": "components.json, .gitignore, postcss.config.mjs, .prettierrc.json, tailwind.config.ts, tsconfig.json, .eslintrc.json, next-env.d.ts"
   },
 
-  "workbench.iconTheme": "vscode-icons",
+  "workbench.iconTheme": "material-icon-theme",
   "workbench.sideBar.location": "right",
   "workbench.colorCustomizations": {
     "activityBar.activeBackground": "#53a858",
