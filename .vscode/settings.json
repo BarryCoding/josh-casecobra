@@ -9,6 +9,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
 
+  // VSCode File Structure
   "explorer.confirmDelete": false,
   "explorer.sortOrder": "filesFirst",
   "explorer.compactFolders": false,
@@ -20,6 +21,8 @@
 
   "workbench.iconTheme": "material-icon-theme",
   "workbench.sideBar.location": "right",
+
+  // Peacock
   "workbench.colorCustomizations": {
     "activityBar.activeBackground": "#53a858",
     "activityBar.background": "#53a858",
@@ -39,5 +42,10 @@
     "titleBar.inactiveBackground": "#42864699",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "peacock.color": "#428646"
+  "peacock.color": "#428646",
+
+  // Sort Typescript Imports
+  "typescript.extension.sortImports.sortOnSave": true,
+  "typescript.extension.sortImports.sortMethod": "path",
+  "typescript.extension.sortImports.omitSemicolon": true
 }

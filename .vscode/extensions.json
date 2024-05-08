@@ -24,6 +24,7 @@
     // DX
     "mikestead.dotenv",
     "christian-kohler.npm-intellisense",
-    "christian-kohler.path-intellisense"
+    "christian-kohler.path-intellisense",
+    "miclo.sort-typescript-imports"
   ]
 }
