@@ -16,7 +16,7 @@ export const PhoneCase = ({ imgSrc, className, dark = false, ...props }: PhoneCa
       />
       <img
         src={imgSrc}
-        className='absolute inset-0 min-h-full min-w-full object-cover'
+        className='absolute inset-0 min-h-full min-w-full select-none object-cover'
         alt='overlaying phone image'
       />
     </div>

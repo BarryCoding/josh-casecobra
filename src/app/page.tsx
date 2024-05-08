@@ -226,13 +226,13 @@ export default function Home() {
               <div className='relative h-80 w-full max-w-sm rounded-xl bg-gray-900/5 ring-inset ring-gray-900/10 md:h-full md:justify-self-end lg:rounded-2xl'>
                 <img
                   src='/horse.jpg'
-                  className='h-full w-full rounded-md bg-white object-cover shadow-2xl ring-1 ring-gray-900/10'
+                  className='pointer-events-none h-full w-full select-none rounded-md bg-white object-cover shadow-2xl ring-1 ring-gray-900/10'
                   alt='horse'
                 />
               </div>
               <img
                 src='/arrow.png'
-                className='absolute left-1/2 top-[25rem] z-10 -translate-x-1/2 -translate-y-1/2 rotate-90 md:top-1/2 md:rotate-0'
+                className='absolute left-1/2 top-[25rem] z-10 -translate-x-1/2 -translate-y-1/2 rotate-90 select-none md:top-1/2 md:rotate-0'
                 alt='arrow'
               />
               <PhoneCase className='w-60' imgSrc='/horse_phone.jpg' />
