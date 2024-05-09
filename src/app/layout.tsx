@@ -4,6 +4,7 @@ import { Navbar } from '@/components/Navbar'
 import { Inter } from 'next/font/google'
 import type { Metadata } from 'next'
 import { cn } from '@/lib/utils'
+import { Toaster } from '@/components/ui/toaster'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,6 +24,7 @@ export default function RootLayout({
         <Navbar />
         <main className='flex flex-1 flex-col'>{children}</main>
         <Footer />
+        <Toaster />
       </body>
     </html>
   )
