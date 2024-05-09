@@ -28,6 +28,7 @@
     // "miclo.sort-typescript-imports", // conflict with 'use client'
     "naumovs.color-highlight",
     "SimonSiefke.svg-preview",
-    "pomdtr.excalidraw-editor"
+    "pomdtr.excalidraw-editor",
+    "Prisma.prisma"
   ]
 }
