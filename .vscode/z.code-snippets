@@ -11,7 +11,7 @@
   },
   "Wrapper Component": {
     "scope": "typescriptreact",
-    "prefix": "tsx-wrap",
+    "prefix": "tsx-slot",
     "body": [
       "import { cn } from '@/lib/utils'",
       "",
@@ -45,5 +45,11 @@
     "scope": "typescriptreact",
     "prefix": "divc",
     "body": ["<div className='$1'>$0</div>"],
+  },
+  "useState Snippet": {
+    "scope": "typescriptreact",
+    "prefix": "u-state",
+    "body": ["const [${1:state}, set${1/(.*)/${1:/capitalize}/}] = useState<${2:string}>(${3:''})"],
+    "description": "useState snippet",
   },
 }

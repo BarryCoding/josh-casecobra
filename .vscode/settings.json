@@ -23,6 +23,7 @@
   "workbench.sideBar.location": "right",
 
   // Peacock
+  "peacock.color": "#428646",
   "workbench.colorCustomizations": {
     "activityBar.activeBackground": "#53a858",
     "activityBar.background": "#53a858",
@@ -41,11 +42,5 @@
     "titleBar.activeForeground": "#e7e7e7",
     "titleBar.inactiveBackground": "#42864699",
     "titleBar.inactiveForeground": "#e7e7e799"
-  },
-  "peacock.color": "#428646",
-
-  // Sort Typescript Imports
-  "typescript.extension.sortImports.sortOnSave": true,
-  "typescript.extension.sortImports.sortMethod": "path",
-  "typescript.extension.sortImports.omitSemicolon": true
+  }
 }
