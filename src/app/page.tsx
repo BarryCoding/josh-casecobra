@@ -8,7 +8,7 @@ import Link from 'next/link'
 
 export default function Home() {
   return (
-    <main className='bg-slate-50'>
+    <div className='bg-slate-50'>
       {/* hero section */}
       <section>
         {/* phone ~ sm ~ lg ~ xl */}
@@ -266,6 +266,6 @@ export default function Home() {
           </Link>
         </CenterWrapper>
       </section>
-    </main>
+    </div>
   )
 }

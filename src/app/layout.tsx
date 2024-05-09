@@ -3,6 +3,7 @@ import { Footer } from '@/components/Footer'
 import { Navbar } from '@/components/Navbar'
 import { Inter } from 'next/font/google'
 import type { Metadata } from 'next'
+import { cn } from '@/lib/utils'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,9 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={inter.className}>
+      <body className={cn(inter.className, 'flex min-h-[100vh] flex-col')}>
         <Navbar />
-        {children}
+        <main className='flex flex-1 flex-col'>{children}</main>
         <Footer />
       </body>
     </html>
