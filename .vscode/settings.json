@@ -57,6 +57,12 @@
       "backgroundColor": "#f3ce49"
     },
     {
+      "text": "BEST:",
+      "color": "#3d220c",
+      "borderRadius": "2px",
+      "backgroundColor": "#f3ce49"
+    },
+    {
       "text": "REFACTOR:",
       "color": "#f9fafb",
       "borderRadius": "2px",

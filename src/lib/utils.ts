@@ -23,3 +23,15 @@ export function splitArrayIntoParts<T>(array: T[], numParts: number): T[][] {
     return result
   }, [])
 }
+
+export const formatPrice = (price: number) => {
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  })
+
+  return formatter.format(price)
+}
+
+// LEARN: Intl.NumberFormat
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
