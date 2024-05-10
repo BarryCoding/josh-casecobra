@@ -1,11 +1,19 @@
 'use client'
 
 import { AspectRatio } from '@/components/ui/aspect-ratio'
+import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import { Label } from '@/components/ui/label'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
-import { COLORS } from '@/validator/options'
+import { COLORS, MODELS } from '@/validator/options'
 import { RadioGroup } from '@headlessui/react'
+import { CheckCircleIcon, ChevronsUpDownIcon } from 'lucide-react'
 import NextImage from 'next/image'
 import { useState } from 'react'
 import { Rnd } from 'react-rnd'
@@ -16,8 +24,12 @@ interface CustomizeDesignProps {
   imageDimensions: { width: number; height: number }
 }
 export const CustomizeDesign = ({ configId, imageUrl, imageDimensions }: CustomizeDesignProps) => {
-  const [options, setOptions] = useState({
+  const [options, setOptions] = useState<{
+    color: (typeof COLORS)[number]
+    model: (typeof MODELS.options)[number]
+  }>({
     color: COLORS[0],
+    model: MODELS.options[5],
   })
   // REFACTOR: get rid of unnecessary div and css: aspect-[896/1831] z-index and so on
   return (
@@ -77,7 +89,7 @@ export const CustomizeDesign = ({ configId, imageUrl, imageDimensions }: Customi
             {/* FIXME: as border */}
             <div className='my-6 h-px w-full bg-zinc-200' />
 
-            {/* Selection */}
+            {/* Color Selection */}
             <div className='relative mt-4 flex h-full flex-col justify-between'>
               <div className='flex flex-col gap-6'>
                 <RadioGroup
@@ -114,6 +126,43 @@ export const CustomizeDesign = ({ configId, imageUrl, imageDimensions }: Customi
                     ))}
                   </div>
                 </RadioGroup>
+
+                {/* Model Selection */}
+                <div className='relative flex w-full flex-col gap-3'>
+                  <Label>Model</Label>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant='outline' role='combobox' className='w-full justify-between'>
+                        {options.model.label}
+                        <ChevronsUpDownIcon className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      {MODELS.options.map((model) => (
+                        <DropdownMenuItem
+                          key={model.label}
+                          className={cn(
+                            'flex cursor-default items-center justify-between gap-1 p-1.5 text-sm hover:bg-zinc-100',
+                            {
+                              'bg-zinc-100': model.label === options.model.label,
+                            },
+                          )}
+                          onClick={() => {
+                            setOptions((prev) => ({ ...prev, model }))
+                          }}
+                        >
+                          {model.label}
+                          <CheckCircleIcon
+                            className={cn(
+                              'mr-2 h-4 w-4',
+                              model.label === options.model.label ? 'opacity-100' : 'opacity-0',
+                            )}
+                          />
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
               </div>
             </div>
           </div>
@@ -137,3 +186,4 @@ const CornerComponent = () => {
 // 5 shadcn: `pnpm dlx shadcn-ui@latest add scroll-area`
 // 6 headlessui: `pnpm add @headlessui/react`
 // 7 shadcn: `pnpm dlx shadcn-ui@latest add label`
+// 8 shadcn: `pnpm dlx shadcn-ui@latest add dropdown-menu`
