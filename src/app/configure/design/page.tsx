@@ -1,5 +1,6 @@
 import { db } from '@/db'
 import { notFound } from 'next/navigation'
+import { CustomizeDesign } from './CustomizeDesign'
 
 interface PageProps {
   searchParams: { id?: string }
@@ -13,5 +14,5 @@ export default async function Page({ searchParams: { id } }: PageProps) {
 
   const { imageUrl, width, height } = configuration
 
-  return <div>{id}</div>
+  return <CustomizeDesign configId={id} imageUrl={imageUrl} imageDimensions={{ width, height }} />
 }
