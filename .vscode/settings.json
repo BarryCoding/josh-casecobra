@@ -47,5 +47,7 @@
   // prisma
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
-  }
+  },
+  // NextJs Better TS Support
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

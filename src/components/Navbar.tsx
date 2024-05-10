@@ -8,7 +8,7 @@ export const Navbar = async () => {
   const { getUser } = getKindeServerSession()
   const user = await getUser()
   const isLoggedIn = !!user?.id
-  const isAdmin = user?.email === process.env.ADMIN_EMAIL
+  const isAdmin = user?.email === process.env.KINDE_ADMIN_EMAIL
 
   return (
     <nav className='sticky inset-x-0 top-0 z-[100] h-14 w-full border-b border-zinc-200 bg-white/75 backdrop-blur-md'>
