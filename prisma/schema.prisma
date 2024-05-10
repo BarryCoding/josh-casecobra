@@ -9,7 +9,12 @@ datasource db {
 
 model Configuration {
   id              String  @id @default(cuid())
+  imageUrl        String
   width           Int
   height          Int
   croppedImageUrl String?
 }
+
+// LEARN:
+// 1. after modifing model field
+// npx prisma db push

@@ -43,6 +43,32 @@
     "titleBar.inactiveBackground": "#42864699",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
+  "todohighlight.keywords": [
+    {
+      "text": "NOTES:",
+      "color": "#122d18",
+      "borderRadius": "2px",
+      "backgroundColor": "#5ec26a"
+    },
+    {
+      "text": "LEARN:",
+      "color": "#3d220c",
+      "borderRadius": "2px",
+      "backgroundColor": "#f3ce49"
+    },
+    {
+      "text": "REFACTOR:",
+      "color": "#f9fafb",
+      "borderRadius": "2px",
+      "backgroundColor": "#652cd1"
+    },
+    {
+      "text": "TRY:",
+      "color": "#f9fafb",
+      "borderRadius": "2px",
+      "backgroundColor": "#d9622b"
+    }
+  ],
 
   // prisma
   "[prisma]": {
