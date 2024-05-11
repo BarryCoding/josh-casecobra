@@ -10,13 +10,15 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Label } from '@/components/ui/label'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { useToast } from '@/components/ui/use-toast'
 import { BASE_PRICE } from '@/constants/product'
-import { cn, formatPrice } from '@/lib/utils'
+import { useUploadThing } from '@/lib/uploadthing'
+import { base64ToBlob, cn, formatPrice } from '@/lib/utils'
 import { COLORS, FINISHES, MATERIALS, MODELS } from '@/validator/options'
 import { RadioGroup } from '@headlessui/react'
 import { ArrowRightCircleIcon, CheckCircleIcon, ChevronsUpDownIcon } from 'lucide-react'
 import NextImage from 'next/image'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Rnd } from 'react-rnd'
 
 interface CustomizeDesignProps {
@@ -25,6 +27,7 @@ interface CustomizeDesignProps {
   imageDimensions: { width: number; height: number }
 }
 export const CustomizeDesign = ({ configId, imageUrl, imageDimensions }: CustomizeDesignProps) => {
+  const { toast } = useToast()
   const [options, setOptions] = useState<{
     color: (typeof COLORS)[number]
     model: (typeof MODELS.options)[number]
@@ -36,15 +39,82 @@ export const CustomizeDesign = ({ configId, imageUrl, imageDimensions }: Customi
     material: MATERIALS.options[0],
     finish: FINISHES.options[0],
   })
-  // REFACTOR: get rid of unnecessary div and css: aspect-[896/1831] z-index and so on
+
+  // save cropped image to uploadthing
+  // size of the image
+  const [renderedDimension, setRenderedDimension] = useState({
+    width: imageDimensions.width / 4,
+    height: imageDimensions.height / 4,
+  })
+  // position of the image
+  const [renderedPosition, setRenderedPosition] = useState({
+    x: 150,
+    y: 205,
+  })
+  const phoneCaseRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  const { startUpload } = useUploadThing('imageUploader')
+
+  async function saveConfiguration() {
+    if (!phoneCaseRef.current || !containerRef.current) return
+    try {
+      const {
+        left: caseLeft,
+        top: caseTop,
+        width,
+        height,
+      } = phoneCaseRef.current.getBoundingClientRect()
+      const { left: containerLeft, top: containerTop } =
+        containerRef.current.getBoundingClientRect()
+      const leftOffset = caseLeft - containerLeft
+      const topOffset = caseTop - containerTop
+      // TRY: a better way to get actualX and actualY
+      // the actual position of the uploaded image relative to the phone case
+      const actualX = renderedPosition.x - leftOffset
+      const actualY = renderedPosition.y - topOffset
+
+      const canvas = document.createElement('canvas')
+      // the size of the canvas should be the same as the phone case
+      canvas.width = width
+      canvas.height = height
+      const ctx = canvas.getContext('2d')
+
+      // REFACTOR: 1 a utils function: loadImageFromUrl
+      const userImage = new Image()
+      userImage.crossOrigin = 'anonymous' // allow CORS to edit image
+      userImage.src = imageUrl
+      await new Promise((resolve) => (userImage.onload = resolve)) // wait for image to load
+
+      // REFACTOR: 2 a utils function: drawImageToCanvas
+      ctx?.drawImage(userImage, actualX, actualY, renderedDimension.width, renderedDimension.height)
+      const base64 = canvas.toDataURL()
+      const base64Data = base64.split(',')[1]
+      const blob = base64ToBlob(base64Data, 'image/png')
+      const file = new File([blob], 'filename.png', { type: 'image/png' })
+      await startUpload([file], { configId })
+    } catch (err) {
+      toast({
+        variant: 'destructive',
+        title: 'Something went wrong',
+        description: 'There was a problem saving your config, please try again.',
+      })
+    }
+  }
+
+  // update neon db croppedImageUrl
+
   return (
     <div className='relative mt-20 grid grid-cols-1 pb-20 lg:grid-cols-3'>
-      <div className='relative col-span-2 flex h-[37.5rem] w-full max-w-4xl items-center justify-center overflow-hidden rounded-lg border-2 border-dashed border-gray-300 p-12 text-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2'>
+      <div
+        className='relative col-span-2 flex h-[37.5rem] w-full max-w-4xl items-center justify-center overflow-hidden rounded-lg border-2 border-dashed border-gray-300 p-12 text-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2'
+        ref={containerRef}
+      >
         <div className='pointer-events-none relative aspect-[896/1831] w-60 bg-opacity-50'>
           <AspectRatio
-            // ref={phoneCaseRef}
-            ratio={896 / 1831}
             className='pointer-events-none relative z-50 aspect-[896/1831] w-full'
+            ref={phoneCaseRef}
+            ratio={896 / 1831}
           >
             <NextImage
               className='pointer-events-none select-none'
@@ -77,6 +147,16 @@ export const CustomizeDesign = ({ configId, imageUrl, imageDimensions }: Customi
             bottomLeft: <CornerComponent />,
             topRight: <CornerComponent />,
             topLeft: <CornerComponent />,
+          }}
+          onResizeStop={(_, __, ref, ___, { x, y }) => {
+            setRenderedDimension({
+              height: parseInt(ref.style.height.slice(0, -2)), // -2 to remove 'px' unit
+              width: parseInt(ref.style.width.slice(0, -2)),
+            })
+            setRenderedPosition({ x, y }) // resize from left / top / top-left
+          }}
+          onDragStop={(_, { x, y }) => {
+            setRenderedPosition({ x, y })
           }}
         >
           <NextImage src={imageUrl} fill alt='your image' className='pointer-events-none' />
@@ -227,7 +307,7 @@ export const CustomizeDesign = ({ configId, imageUrl, imageDimensions }: Customi
             <p className='whitespace-nowrap font-medium'>
               {formatPrice((BASE_PRICE + options.finish.price + options.material.price) / 100)}
             </p>
-            <Button className='w-full'>
+            <Button className='w-full' onClick={() => saveConfiguration()}>
               Continue
               <ArrowRightCircleIcon className='ml-3 inline h-6 w-6' />
             </Button>
@@ -240,11 +320,12 @@ export const CustomizeDesign = ({ configId, imageUrl, imageDimensions }: Customi
 
 const CornerComponent = () => {
   return (
-    <div className='h-5 w-5 rounded-full border border-zinc-200 bg-white shadow transition hover:bg-primary' />
+    <div className='h-5 w-5 rounded-full border border-zinc-200 bg-white/50 shadow transition hover:bg-primary' />
   )
 }
 
 // NOTES:
+// 0 pointer-events-none is useful to make a image as a background
 // 1 tailwind: aspect-[896/1831]
 // 2 shadcn: `pnpm dlx shadcn-ui@latest add aspect-ratio`
 // 3 LEARN: Next Image 1.fill 2.whitelist
@@ -254,3 +335,12 @@ const CornerComponent = () => {
 // 7 shadcn: `pnpm dlx shadcn-ui@latest add label`
 // 8 shadcn: `pnpm dlx shadcn-ui@latest add dropdown-menu`
 // 9 BEST: use border-box in global.css to get rid of all `div border`
+// 10 API: getBoundingClientRect
+// 11 How to get the relative position of 2 containers
+
+// LEARN: how to crop image by canvas: 1. how to draw, 2. after drawing turn canvas into image file
+
+// TODO:
+// 1. make the width a fixed standard: the width of the template phone image
+// 2. get rid of unnecessary div and css: aspect-[896/1831] z-index and so on
+// 3. combine the size and position states of image into one

@@ -20,6 +20,9 @@
     "ipatalas.vscode-postfix-ts",
     // Productivity - Next.js
     "pulkitgangwar.nextjs-snippets",
+    // 1. After Component UI development
+    // 2. Fold all classNames to focus on Component Logic
+    "moalamri.inline-fold",
 
     // DX
     "mikestead.dotenv",
