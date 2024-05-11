@@ -8,13 +8,45 @@ datasource db {
 }
 
 model Configuration {
-  id              String  @id @default(cuid())
-  imageUrl        String
-  width           Int
-  height          Int
+  id       String @id @default(cuid())
+  imageUrl String
+  width    Int
+  height   Int
+
   croppedImageUrl String?
+  color           CaseColor?
+  model           PhoneModel?
+  material        CaseMaterial?
+  finish          CaseFinish?
+}
+
+enum CaseColor {
+  black
+  blue
+  rose
+}
+
+enum PhoneModel {
+  iphonex
+  iphone11
+  iphone12
+  iphone13
+  iphone14
+  iphone15
+}
+
+enum CaseMaterial {
+  silicone
+  polycarbonate
+}
+
+enum CaseFinish {
+  smooth
+  textured
 }
 
 // LEARN:
 // 1. after modifing model field
 // npx prisma db push
+
+// 2. enum for category

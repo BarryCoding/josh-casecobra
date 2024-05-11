@@ -2,8 +2,9 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
+    "source.organizeImports": "always", // auto sort import on save
     "source.fixAll.eslint": "always",
-    "source.addMissingImports": "always"
+    "source.addMissingImports": "always" // may not be good, as import the wrong modules
   },
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"

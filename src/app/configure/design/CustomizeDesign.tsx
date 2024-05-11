@@ -16,10 +16,13 @@ import { useUploadThing } from '@/lib/uploadthing'
 import { base64ToBlob, cn, formatPrice } from '@/lib/utils'
 import { COLORS, FINISHES, MATERIALS, MODELS } from '@/validator/options'
 import { RadioGroup } from '@headlessui/react'
+import { useMutation } from '@tanstack/react-query'
 import { ArrowRightCircleIcon, CheckCircleIcon, ChevronsUpDownIcon } from 'lucide-react'
 import NextImage from 'next/image'
+import { useRouter } from 'next/navigation'
 import { useRef, useState } from 'react'
 import { Rnd } from 'react-rnd'
+import { SaveConfigurationArgs, saveConfigurationAction } from './action'
 
 interface CustomizeDesignProps {
   configId: string
@@ -27,7 +30,9 @@ interface CustomizeDesignProps {
   imageDimensions: { width: number; height: number }
 }
 export const CustomizeDesign = ({ configId, imageUrl, imageDimensions }: CustomizeDesignProps) => {
+  const router = useRouter()
   const { toast } = useToast()
+  // REFACTOR: designConfiguration state { color, model, material, finish }
   const [options, setOptions] = useState<{
     color: (typeof COLORS)[number]
     model: (typeof MODELS.options)[number]
@@ -55,6 +60,24 @@ export const CustomizeDesign = ({ configId, imageUrl, imageDimensions }: Customi
   const containerRef = useRef<HTMLDivElement>(null)
 
   const { startUpload } = useUploadThing('imageUploader')
+
+  const { mutate: submitDesign, isPending } = useMutation({
+    mutationKey: ['save-config'],
+    mutationFn: async (args: SaveConfigurationArgs) => {
+      // upload image to uploadthing and update design configuration to db
+      await Promise.all([saveConfiguration(), saveConfigurationAction(args)])
+    },
+    onError: () => {
+      toast({
+        variant: 'destructive',
+        title: 'Something went wrong',
+        description: 'There was an error on our end. Please try again.',
+      })
+    },
+    onSuccess: () => {
+      router.push(`/configure/preview?id=${configId}`)
+    },
+  })
 
   async function saveConfiguration() {
     if (!phoneCaseRef.current || !containerRef.current) return
@@ -307,7 +330,20 @@ export const CustomizeDesign = ({ configId, imageUrl, imageDimensions }: Customi
             <p className='whitespace-nowrap font-medium'>
               {formatPrice((BASE_PRICE + options.finish.price + options.material.price) / 100)}
             </p>
-            <Button className='w-full' onClick={() => saveConfiguration()}>
+            <Button
+              className='w-full'
+              // isLoading={isPending}
+              disabled={isPending}
+              onClick={() =>
+                submitDesign({
+                  configId,
+                  color: options.color.value,
+                  finish: options.finish.value,
+                  material: options.material.value,
+                  model: options.model.value,
+                })
+              }
+            >
               Continue
               <ArrowRightCircleIcon className='ml-3 inline h-6 w-6' />
             </Button>
@@ -337,6 +373,8 @@ const CornerComponent = () => {
 // 9 BEST: use border-box in global.css to get rid of all `div border`
 // 10 API: getBoundingClientRect
 // 11 How to get the relative position of 2 containers
+// 12 react-query: `pnpm add @tanstack/react-query`
+// 13 Promise.all: `await Promise.all([promiseFn1(), promiseFn2(args)])`
 
 // LEARN: how to crop image by canvas: 1. how to draw, 2. after drawing turn canvas into image file
 
