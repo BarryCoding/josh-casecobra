@@ -38,12 +38,28 @@
 | ⇧⌥A     | Toggle block comment     |
 | ⌥Z      | Toggle word wrap         |
 
-## Terminal
+## Search and Relplace
 
-| press | Terminal                 |
-| ----- | ------------------------ |
-| ⌃`    | Show integrated terminal |
-| ⌃⇧`   | Create new terminal      |
+| press  | Search and Relplace                  |
+| ------ | ------------------------------------ |
+| ⌘F     | Find                                 |
+| ⌘D     | Add selection to next Find match     |
+| ⌥Enter | Select all occurrences of Find match |
+| ⌥⌘F    | Replace                              |
+
+
+## Navigation
+
+| Shortcut | Editor Management               |
+| -------- | ------------------------------- |
+| ⌃-       | Go back                         |
+| ⌃⇧-      | Go forward                      |
+| ⌃⇧Tab    | Navigate editor group history   |
+| ⌘T       | Show all Symbols in project     |
+| ⌘P       | Go to File...                   |
+| ⇧⌘O      | Show all Symbol in current file |
+
+
 
 ## Editor Management 
 
@@ -52,13 +68,17 @@
 | ⌘\       | Split editor                          |
 | ⌘(1/2/3) | Focus into 1st, 2nd, 3rd editor group |
 
+## Terminal
+
+| press | Terminal                 |
+| ----- | ------------------------ |
+| ⌃`    | Show integrated terminal |
+| ⌃⇧`   | Create new terminal      |
+
 
 <!-- TODO: catogary -->
 
 | press | description                           |
 | ----- | ------------------------------------- |
 | ⌥ ⌘ ↓ | multi cursor down                     |
-| ⌘ T   | find variable                         |
 | ⇧ ⌥ O | organize import(remove unused import) |
-| ⇧ ⌥ ↑ | copy line up                          |
-| ⇧ ⌥ ↓ | copy line down                        |
