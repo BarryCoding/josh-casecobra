@@ -332,7 +332,6 @@ export const CustomizeDesign = ({ configId, imageUrl, imageDimensions }: Customi
             </p>
             <Button
               className='w-full'
-              // isLoading={isPending}
               disabled={isPending}
               onClick={() =>
                 submitDesign({
@@ -344,8 +343,22 @@ export const CustomizeDesign = ({ configId, imageUrl, imageDimensions }: Customi
                 })
               }
             >
-              Continue
-              <ArrowRightCircleIcon className='ml-3 inline h-6 w-6' />
+              {isPending ? (
+                <>
+                  Saving
+                  {/* <Spinner /> or LoadingIcon in button */}
+                  <span className='ml-1.5 flex items-center gap-1'>
+                    <span className='animate-flashing inline-block h-1 w-1 rounded-full bg-white' />
+                    <span className='animate-flashing inline-block h-1 w-1 rounded-full bg-white delay-100' />
+                    <span className='animate-flashing inline-block h-1 w-1 rounded-full bg-white delay-200' />
+                  </span>
+                </>
+              ) : (
+                <>
+                  Continue
+                  <ArrowRightCircleIcon className='ml-3 inline h-6 w-6' />
+                </>
+              )}
             </Button>
           </div>
         </div>
