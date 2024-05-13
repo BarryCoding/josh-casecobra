@@ -1,5 +1,6 @@
 import { db } from '@/db'
 import { notFound } from 'next/navigation'
+import { DesignPreview } from './DesignPreview'
 
 interface PageProps {
   searchParams: { id?: string }
@@ -11,7 +12,5 @@ export default async function Page({ searchParams: { id } }: PageProps) {
   const configuration = await db.configuration.findUnique({ where: { id } })
   if (!configuration) return notFound()
 
-  const { croppedImageUrl, imageUrl, width, height } = configuration
-
-  return <>preview {id}</>
+  return <DesignPreview configuration={configuration} />
 }
