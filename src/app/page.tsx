@@ -8,7 +8,7 @@ import Link from 'next/link'
 
 export default function Home() {
   return (
-    <div className='bg-slate-50'>
+    <>
       {/* hero section */}
       <section>
         {/* phone ~ sm ~ lg ~ xl */}
@@ -109,7 +109,7 @@ export default function Home() {
       </section>
 
       {/* customers reviews section */}
-      <section className='bg-slate-100 py-24'>
+      <section className='grainy-dark bg-slate-100  py-24'>
         <CenterWrapper className='flex flex-col items-center gap-16 sm:gap-32'>
           <div className='flex flex-col items-center gap-4 sm:gap-6 lg:flex-row'>
             <h2 className='order-1 mt-2 text-balance text-center text-5xl font-bold !leading-tight tracking-tight text-gray-900 md:text-6xl'>
@@ -266,6 +266,6 @@ export default function Home() {
           </Link>
         </CenterWrapper>
       </section>
-    </div>
+    </>
   )
 }

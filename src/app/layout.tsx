@@ -4,10 +4,10 @@ import { Toaster } from '@/components/ui/toaster'
 import { cn } from '@/lib/utils'
 import { ReactQueryProvider } from '@/providers/ReactQuery'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Recursive } from 'next/font/google'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
+const recursive = Recursive({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -21,9 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={cn(inter.className, 'flex min-h-[100vh] flex-col')}>
+      <body className={cn(recursive.className, 'flex min-h-[100vh] flex-col')}>
         <Navbar />
-        <main className='flex flex-1 flex-col'>
+        <main className='grainy-light flex flex-1 flex-col'>
           <ReactQueryProvider>{children}</ReactQueryProvider>
         </main>
         <Footer />
@@ -32,3 +32,5 @@ export default function RootLayout({
     </html>
   )
 }
+
+// font recursive is cool
