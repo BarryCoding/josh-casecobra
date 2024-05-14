@@ -8,7 +8,8 @@
     "start": "next start",
     "prettier-check": "prettier --check .",
     "prettier-write": "prettier --write .",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@headlessui/react": "^2.0.3",
