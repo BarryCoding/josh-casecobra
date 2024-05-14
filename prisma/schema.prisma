@@ -45,8 +45,19 @@ enum CaseFinish {
   textured
 }
 
+model User {
+  id      String @id @default(cuid())
+  kindeId String
+  email   String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 // LEARN:
 // 1. after modifing model field
 // npx prisma db push
 
 // 2. enum for category
+
+// ? one to many? one to one? many to many?
