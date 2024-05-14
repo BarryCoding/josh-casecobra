@@ -5,15 +5,21 @@ import { BASE_PRICE, PRODUCT_PRICES } from '@/constants/product'
 import { cn, formatPrice } from '@/lib/utils'
 import { COLORS, MODELS } from '@/validator/options'
 import { Configuration } from '@prisma/client'
+import { useMutation } from '@tanstack/react-query'
 import { ArrowRightCircleIcon, CheckCircleIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import Confetti from 'react-dom-confetti'
+import { createCheckoutSession } from './action'
+import { useRouter } from 'next/navigation'
+import { useToast } from '@/components/ui/use-toast'
 import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs'
 import { LoginModal } from '@/components/LoginModal'
 
 export const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
+  const router = useRouter()
+  const { toast } = useToast()
   const { user } = useKindeBrowserClient()
-  const { id: configId, color, model, finish, material } = configuration
+  const { id: configurationId, color, model, finish, material } = configuration
   const [showConfetti, setShowConfetti] = useState<boolean>(false)
   useEffect(() => setShowConfetti(true), [])
   const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
@@ -24,13 +30,30 @@ export const DesignPreview = ({ configuration }: { configuration: Configuration 
   if (material === 'polycarbonate') totalPrice += PRODUCT_PRICES.material.polycarbonate
   if (finish === 'textured') totalPrice += PRODUCT_PRICES.finish.textured
 
+  const { mutate: createPaymentSession } = useMutation({
+    mutationKey: ['get-checkout-session'],
+    mutationFn: createCheckoutSession,
+    onSuccess: ({ url }) => {
+      if (url) router.push(url)
+      else throw new Error('Unable to retrieve payment URL.')
+    },
+    onError: () => {
+      toast({
+        title: 'Something went wrong',
+        description: 'There was an error on our end. Please try again.',
+        variant: 'destructive',
+      })
+    },
+  })
+
   const handleCheckout = () => {
     if (user) {
       // create payment session
+      createPaymentSession({ configurationId })
     } else {
       // need to log in
       // save the configurationId for latter redirection
-      localStorage.setItem('configurationId', configId)
+      localStorage.setItem('configurationId', configurationId)
       setIsLoginModalOpen(true)
     }
   }

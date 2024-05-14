@@ -19,6 +19,7 @@ export const getAuthStatus = async () => {
   if (!existingUser) {
     await db.user.create({
       data: {
+        id: kindeId,
         kindeId,
         email,
       },
@@ -27,3 +28,5 @@ export const getAuthStatus = async () => {
 
   return { success: true }
 }
+
+// in authentication ,should I keep user id same as kinde id?
