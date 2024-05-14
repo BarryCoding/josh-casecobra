@@ -8,17 +8,33 @@ import { Configuration } from '@prisma/client'
 import { ArrowRightCircleIcon, CheckCircleIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import Confetti from 'react-dom-confetti'
+import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs'
+import { LoginModal } from '@/components/LoginModal'
 
 export const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
+  const { user } = useKindeBrowserClient()
   const { id: configId, color, model, finish, material } = configuration
   const [showConfetti, setShowConfetti] = useState<boolean>(false)
   useEffect(() => setShowConfetti(true), [])
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
 
   const tw = COLORS.find((supportedColor) => supportedColor.value === color)?.tw
   const { label: modelLabel } = MODELS.options.find(({ value }) => value === model)!
   let totalPrice = BASE_PRICE
   if (material === 'polycarbonate') totalPrice += PRODUCT_PRICES.material.polycarbonate
   if (finish === 'textured') totalPrice += PRODUCT_PRICES.finish.textured
+
+  const handleCheckout = () => {
+    if (user) {
+      // create payment session
+    } else {
+      // need to log in
+      // save the configurationId for latter redirection
+      localStorage.setItem('configurationId', configId)
+      setIsLoginModalOpen(true)
+    }
+  }
+
   return (
     <>
       <div
@@ -103,13 +119,14 @@ export const DesignPreview = ({ configuration }: { configuration: Configuration 
               </div>
             </div>
             <div className='mt-8 flex justify-end pb-12'>
-              <Button className='px-4 sm:px-6 lg:px-8'>
+              <Button className='px-4 sm:px-6 lg:px-8' onClick={() => handleCheckout()}>
                 Check out <ArrowRightCircleIcon className='ml-1.5 inline h-4 w-4' />
               </Button>
             </div>
           </div>
         </div>
       </div>
+      <LoginModal open={isLoginModalOpen} onOpenChange={setIsLoginModalOpen} />
     </>
   )
 }
