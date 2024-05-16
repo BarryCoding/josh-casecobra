@@ -78,7 +78,7 @@ export const ThankYou = () => {
         </div>
 
         <div className='mt-4 flex space-x-6 overflow-hidden rounded-xl bg-gray-900/5 ring-1 ring-inset ring-gray-900/10 lg:rounded-2xl'>
-          {/* <PhonePreview croppedImageUrl={configuration.croppedImageUrl!} color={color!} /> */}
+          <PhonePreview croppedImageUrl={configuration.croppedImageUrl!} color={color!} />
         </div>
 
         <div>

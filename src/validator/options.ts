@@ -1,5 +1,6 @@
 import { PRODUCT_PRICES } from '@/constants/product'
 
+// REFACTOR: the tw as tailwind full classnames
 // array as const is useful to make readonly dictionaryArray
 export const COLORS = [
   { label: 'Black', value: 'black', tw: 'zinc-900' },
