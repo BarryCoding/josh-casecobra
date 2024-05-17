@@ -26,3 +26,7 @@ export const CONFIGURE_STEPS = [
     url: '/preview',
   },
 ]
+
+// admin only
+export const WEEKLY_GOAL = 500
+export const MONTHLY_GOAL = 2500
