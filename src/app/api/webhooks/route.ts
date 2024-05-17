@@ -3,6 +3,10 @@ import { testStripe } from '@/lib/stripe'
 import { headers } from 'next/headers'
 import { NextResponse } from 'next/server'
 
+import { Resend } from 'resend'
+import OrderReceivedEmail from '@/components/emails/OrderReceivedEmail'
+const resend = new Resend(process.env.RESEND_API_KEY)
+
 export async function POST(req: Request) {
   try {
     const body = await req.text()
@@ -65,7 +69,25 @@ export async function POST(req: Request) {
             },
           },
         },
+        include: { shippingAddress: true },
       })
+
+      const { data, error } = await resend.emails.send({
+        from: 'z <zxllks@yahoo.com>',
+        to: [event.data.object.customer_details.email],
+        subject: 'Thanks for your order!',
+        react: OrderReceivedEmail({
+          orderId,
+          orderDate: updatedOrder.createdAt.toLocaleDateString(),
+          shippingAddress: updatedOrder.shippingAddress!,
+        }),
+      })
+
+      console.log('🔎 🔍 ~ POST ~ data:', data)
+      if (error) {
+        console.log(`🔎 🔍 ~ POST ~ error:`, error)
+        // return Response.json({ error }, { status: 500 })
+      }
     }
 
     return NextResponse.json({ result: event, ok: true })
@@ -76,3 +98,5 @@ export async function POST(req: Request) {
 }
 
 // to get my STRIPE_WEBHOOK_SECRET, deploy to vercel to prepare my url for webhook endpoint
+
+// pnpm add resend
